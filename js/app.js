@@ -14,23 +14,49 @@ function speak(text, rate) {
 
   if (!text) return;
 
-  // Primary: Youdao Dictionary TTS (natural, clear pronunciation)
-  // Fallback chain: Youdao → Google Translate → Web Speech API
+  // Fallback chain: multiple TTS providers → Web Speech API
+  const encoded = encodeURIComponent(text);
   const providers = [
-    'https://dict.youdao.com/dictvoice?type=0&audio=' + encodeURIComponent(text),
-    'https://translate.google.com/translate_tts?ie=UTF-8&tl=zh-CN&client=tw-ob&q=' + encodeURIComponent(text),
+    // Youdao Dictionary TTS — natural female voice
+    'https://dict.youdao.com/dictvoice?audio=' + encoded + '&le=zh',
+    // Google Translate TTS — reliable fallback
+    'https://translate.googleapis.com/translate_tts?client=gtx&tl=zh-CN&q=' + encoded,
   ];
 
-  function tryProvider(idx) {
-    if (idx >= providers.length) { speakFallback(text, rate); return; }
-    try {
-      currentAudio = new Audio(providers[idx]);
+  let tried = 0;
+  function tryNext() {
+    if (tried >= providers.length) {
+      // All online providers failed — use browser TTS
+      speakFallback(text, rate);
+      return;
+    }
+    const url = providers[tried];
+    tried++;
+    currentAudio = new Audio();
+
+    // Set up error handling BEFORE setting src
+    currentAudio.onerror = function() { tryNext(); };
+
+    // Set timeout — if no sound in 3s, try next
+    const timeout = setTimeout(function() {
+      if (currentAudio && currentAudio.readyState < 2) {
+        currentAudio.pause();
+        tryNext();
+      }
+    }, 3000);
+
+    currentAudio.oncanplaythrough = function() {
+      clearTimeout(timeout);
       currentAudio.playbackRate = rate || 1.0;
-      currentAudio.onerror = () => tryProvider(idx + 1);
-      currentAudio.play().catch(() => tryProvider(idx + 1));
-    } catch(e) { tryProvider(idx + 1); }
+    };
+
+    currentAudio.src = url;
+    currentAudio.play().catch(function() {
+      clearTimeout(timeout);
+      tryNext();
+    });
   }
-  tryProvider(0);
+  tryNext();
 }
 
 // Slow mode — for learning, plays at 0.7x speed
@@ -42,12 +68,15 @@ function speakFallback(text, rate) {
   if (!('speechSynthesis' in window)) return;
   const u = new SpeechSynthesisUtterance(text);
   u.lang = 'zh-CN';
-  u.rate = rate || 0.75;
+  u.rate = rate || 0.8;
+  u.pitch = 1.1; // slightly higher pitch = more feminine
   const voices = speechSynthesis.getVoices();
-  // Prefer female voice
-  const zhFemale = voices.find(v => v.lang.startsWith('zh') && v.name.toLowerCase().includes('female'));
-  const zhVoice = zhFemale || voices.find(v => v.lang.startsWith('zh'));
-  if (zhVoice) u.voice = zhVoice;
+  // Priority: female Chinese > any Chinese with female keywords > any Chinese
+  const zhVoices = voices.filter(v => v.lang.startsWith('zh'));
+  const femaleKeywords = ['female','ting','xiaoxiao','yaoyao','xiaoyi','huihui','lili','nü'];
+  const zhFemale = zhVoices.find(v => femaleKeywords.some(k => v.name.toLowerCase().includes(k)));
+  const voice = zhFemale || zhVoices[0];
+  if (voice) u.voice = voice;
   speechSynthesis.speak(u);
 }
 
