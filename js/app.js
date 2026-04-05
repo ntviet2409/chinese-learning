@@ -205,11 +205,9 @@ function renderPinyin() {
   ).join('');
 
   const compGrid = document.getElementById('compoundFinals');
-  // For compound finals, use the pinyin lookup map or construct a character
-  compGrid.innerHTML = FINALS.compound.map(f => {
-    const ch = PY_CHAR_MAP[f.py] || f.py;
-    return '<div class="py-card py-sm" onclick="speak(\''+ch+'\')"><div class="py-letter">'+f.py+'</div></div>';
-  }).join('');
+  compGrid.innerHTML = FINALS.compound.map(f =>
+    '<div class="py-card py-sm" onclick="speak(\''+f.char+'\')"><div class="py-letter">'+f.py+'</div></div>'
+  ).join('');
 
   // Tones
   const toneGrid = document.getElementById('tonesGrid');
