@@ -138,24 +138,26 @@ function renderPinyin() {
   // Initials
   const initGrid = document.getElementById('initialsGrid');
   initGrid.innerHTML = INITIALS.map(i =>
-    '<div class="py-card" onclick="speak(\''+i.py+'ā\')"><div class="py-letter">'+i.py+'</div><div class="py-hint">'+i.vn+'</div></div>'
+    '<div class="py-card" onclick="speak(\''+i.char+'\')"><div class="py-letter">'+i.py+'</div><div class="py-hint">'+i.vn+'</div></div>'
   ).join('');
 
   // Finals
   const singleGrid = document.getElementById('singleFinals');
   singleGrid.innerHTML = FINALS.single.map(f =>
-    '<div class="py-card" onclick="speak(\''+f.py+'\')"><div class="py-letter">'+f.py+'</div><div class="py-hint">'+f.vn+'</div></div>'
+    '<div class="py-card" onclick="speak(\''+f.char+'\')"><div class="py-letter">'+f.py+'</div><div class="py-hint">'+f.vn+'</div></div>'
   ).join('');
 
   const compGrid = document.getElementById('compoundFinals');
-  compGrid.innerHTML = FINALS.compound.map(f =>
-    '<div class="py-card py-sm" onclick="speak(\''+f.py+'\')"><div class="py-letter">'+f.py+'</div></div>'
-  ).join('');
+  // For compound finals, use the pinyin lookup map or construct a character
+  compGrid.innerHTML = FINALS.compound.map(f => {
+    const ch = PY_CHAR_MAP[f.py] || f.py;
+    return '<div class="py-card py-sm" onclick="speak(\''+ch+'\')"><div class="py-letter">'+f.py+'</div></div>';
+  }).join('');
 
   // Tones
   const toneGrid = document.getElementById('tonesGrid');
   toneGrid.innerHTML = TONES.map(t =>
-    '<div class="tone-card" style="border-left:4px solid '+t.color+'" onclick="speak(\''+t.example.split(' ')[0]+'\')">' +
+    '<div class="tone-card" style="border-left:4px solid '+t.color+'" onclick="speak(\''+t.char+'\')">' +
     '<div class="tone-num" style="color:'+t.color+'">'+t.name+'</div>' +
     '<div class="tone-vn">'+t.vn+'</div>' +
     '<div class="tone-example">'+t.example+'</div></div>'
@@ -164,9 +166,11 @@ function renderPinyin() {
   // Tone practice
   const toneP = document.getElementById('tonePractice');
   toneP.innerHTML = TONE_PRACTICE.map(row =>
-    '<div class="tp-row">' + row.map(s =>
-      s ? '<span class="tp-cell" onclick="speak(\''+s+'\')">' + s + '</span>' : '<span class="tp-cell tp-empty">—</span>'
-    ).join('') + '</div>'
+    '<div class="tp-row">' + row.map(s => {
+      if (!s) return '<span class="tp-cell tp-empty">—</span>';
+      const ch = PY_CHAR_MAP[s] || s;
+      return '<span class="tp-cell" onclick="speak(\''+ch+'\')">' + s + '</span>';
+    }).join('') + '</div>'
   ).join('');
 
   // Syllable table
@@ -174,7 +178,11 @@ function renderPinyin() {
   let th = '<tr><th></th>' + SYLLABLE_TABLE_HEADERS.map(h => '<th>'+h+'</th>').join('') + '</tr>';
   let tb = SYLLABLE_TABLE_ROWS.map(r =>
     '<tr><td class="syl-init">'+r.initial+'</td>' +
-    r.syllables.map(s => s ? '<td class="syl-cell" onclick="speak(\''+s+'\')">' + s + '</td>' : '<td class="syl-empty"></td>').join('') +
+    r.syllables.map(s => {
+      if (!s) return '<td class="syl-empty"></td>';
+      const ch = PY_CHAR_MAP[s] || s;
+      return '<td class="syl-cell" onclick="speak(\''+ch+'\')">' + s + '</td>';
+    }).join('') +
     '</tr>'
   ).join('');
   sylTable.innerHTML = '<thead>'+th+'</thead><tbody>'+tb+'</tbody>';
