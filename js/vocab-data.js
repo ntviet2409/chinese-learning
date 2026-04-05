@@ -261,6 +261,257 @@ const VOCAB = {
       ['qiān','千','num.','thousand','nghìn'],
     ]
   },
+  // ── Phương hướng & Vị trí (Directions & Position) ──
+  'Phương hướng & Vị trí': {
+    id:'DIR', name:'Directions & Position', hanzi:'方向和位置', pinyinTitle:'fāngxiàng hé wèizhi',
+    words: [
+      // Phương hướng
+      ['dōng','东','n.','east','đông'],
+      ['nán','南','n.','south','nam'],
+      ['xī','西','n.','west','tây'],
+      ['běi','北','n.','north','bắc'],
+      ['zuǒ','左','n.','left','trái'],
+      ['yòu','右','n.','right','phải'],
+      ['qián','前','n.','front','trước'],
+      ['hòu','后','n.','back; behind','sau; phía sau'],
+      ['shàng','上','n.','up; above; on','trên'],
+      ['xià','下','n.','down; below; under','dưới'],
+      // Vị trí chi tiết
+      ['qiánmiàn','前面','n.','in front of','phía trước'],
+      ['hòumiàn','后面','n.','behind','phía sau'],
+      ['zuǒbiān','左边','n.','left side','bên trái'],
+      ['yòubiān','右边','n.','right side','bên phải'],
+      ['shàngmiàn','上面','n.','above; on top of','phía trên; ở trên'],
+      ['xiàmiàn','下面','n.','below; underneath','phía dưới; ở dưới'],
+      ['lǐmiàn','里面','n.','inside','bên trong'],
+      ['wàimiàn','外面','n.','outside','bên ngoài'],
+      ['zhōngjiān','中间','n.','middle; between','ở giữa'],
+      ['pángbiān','旁边','n.','beside; next to','bên cạnh'],
+      ['duìmiàn','对面','n.','opposite; across from','đối diện'],
+      ['fùjìn','附近','n.','nearby; vicinity','gần đây; lân cận'],
+      ['zhōuwéi','周围','n.','surrounding','xung quanh'],
+    ]
+  },
+
+  // ── Hỏi đường & Đi lại (Asking Directions & Transport) ──
+  'Hỏi đường & Đi lại': {
+    id:'NAV', name:'Asking Directions & Transport', hanzi:'问路和交通', pinyinTitle:'wènlù hé jiāotōng',
+    words: [
+      // Hỏi đường
+      ['qǐngwèn','请问','v.','excuse me (to ask)','xin hỏi'],
+      ['zěnme zǒu','怎么走','','how to get there','đi thế nào'],
+      ['wǎng','往','prep.','towards','về phía'],
+      ['yìzhí','一直','adv.','straight','thẳng'],
+      ['guǎi','拐','v.','to turn','rẽ; quẹo'],
+      ['zuǒ guǎi','左拐','','turn left','rẽ trái'],
+      ['yòu guǎi','右拐','','turn right','rẽ phải'],
+      ['guò','过','v.','to cross; to pass','qua; băng qua'],
+      ['dào','到','v.','to arrive','đến'],
+      ['lí','离','prep.','from (distance)','cách'],
+      ['lùkǒu','路口','n.','intersection','ngã tư'],
+      ['hónglǜdēng','红绿灯','n.','traffic light','đèn giao thông'],
+      ['shízìlùkǒu','十字路口','n.','crossroad','ngã tư đường'],
+      ['tiānqiáo','天桥','n.','overpass; footbridge','cầu vượt'],
+      ['dìxià tōngdào','地下通道','n.','underpass; subway passage','đường hầm'],
+      // Phương tiện
+      ['chē','车','n.','vehicle; car','xe'],
+      ['gōnggòngqìchē','公共汽车','n.','bus','xe buýt'],
+      ['dìtiě','地铁','n.','subway; metro','tàu điện ngầm'],
+      ['chūzūchē','出租车','n.','taxi','xe taxi'],
+      ['huǒchē','火车','n.','train','tàu hỏa'],
+      ['fēijī','飞机','n.','airplane','máy bay'],
+      ['zìxíngchē','自行车','n.','bicycle','xe đạp'],
+      ['chēzhàn','车站','n.','station; bus stop','trạm xe; bến xe'],
+      ['jīchǎng','机场','n.','airport','sân bay'],
+      ['zuò chē','坐车','v.','to take a vehicle','đi xe'],
+      ['kāi chē','开车','v.','to drive','lái xe'],
+      ['dǎ chē','打车','v.','to take a taxi','bắt taxi'],
+    ]
+  },
+
+  // ── Địa điểm & Nơi chốn (Places) ──
+  'Địa điểm': {
+    id:'PLC', name:'Places', hanzi:'地方', pinyinTitle:'dìfang',
+    words: [
+      ['yīyuàn','医院','n.','hospital','bệnh viện'],
+      ['yào diàn','药店','n.','pharmacy','nhà thuốc'],
+      ['xuéxiào','学校','n.','school','trường học'],
+      ['dàxué','大学','n.','university','đại học'],
+      ['yínháng','银行','n.','bank','ngân hàng'],
+      ['yóujú','邮局','n.','post office','bưu điện'],
+      ['jǐngchájú','警察局','n.','police station','đồn công an'],
+      ['fàndiàn','饭店','n.','hotel; restaurant','khách sạn; nhà hàng'],
+      ['cāntīng','餐厅','n.','restaurant; canteen','nhà hàng; căng tin'],
+      ['kāfēi diàn','咖啡店','n.','coffee shop','quán cà phê'],
+      ['shūdiàn','书店','n.','bookstore','nhà sách'],
+      ['chāoshì','超市','n.','supermarket','siêu thị'],
+      ['shāngchǎng','商场','n.','shopping mall','trung tâm thương mại'],
+      ['gōngyuán','公园','n.','park','công viên'],
+      ['tǐyùguǎn','体育馆','n.','gymnasium; stadium','nhà thi đấu'],
+      ['túshūguǎn','图书馆','n.','library','thư viện'],
+      ['bówùguǎn','博物馆','n.','museum','bảo tàng'],
+      ['diànyǐngyuàn','电影院','n.','cinema','rạp chiếu phim'],
+      ['cèsuǒ','厕所','n.','toilet; restroom','nhà vệ sinh'],
+      ['jiàoshì','教室','n.','classroom','phòng học'],
+      ['bàngōngshì','办公室','n.','office','văn phòng'],
+    ]
+  },
+
+  // ── Bệnh viện & Sức khỏe (Hospital & Health) ──
+  'Bệnh viện & Sức khỏe': {
+    id:'MED', name:'Hospital & Health', hanzi:'医院和健康', pinyinTitle:'yīyuàn hé jiànkāng',
+    words: [
+      ['yīshēng','医生','n.','doctor','bác sĩ'],
+      ['hùshi','护士','n.','nurse','y tá'],
+      ['bìngrén','病人','n.','patient','bệnh nhân'],
+      ['kàn bìng','看病','v.','to see a doctor','khám bệnh'],
+      ['bìng','病','n./adj.','illness; sick','bệnh; ốm'],
+      ['shēntǐ','身体','n.','body','cơ thể'],
+      ['tóu','头','n.','head','đầu'],
+      ['yǎnjing','眼睛','n.','eyes','mắt'],
+      ['ěrduo','耳朵','n.','ears','tai'],
+      ['bízi','鼻子','n.','nose','mũi'],
+      ['zuǐba','嘴巴','n.','mouth','miệng'],
+      ['yáchǐ','牙齿','n.','teeth','răng'],
+      ['dùzi','肚子','n.','stomach; belly','bụng'],
+      ['tuǐ','腿','n.','leg','chân (đùi)'],
+      ['shǒu','手','n.','hand','tay'],
+      ['jiǎo','脚','n.','foot','bàn chân'],
+      ['tóu téng','头疼','','headache','đau đầu'],
+      ['dùzi téng','肚子疼','','stomachache','đau bụng'],
+      ['fā shāo','发烧','v.','to have a fever','sốt'],
+      ['gǎnmào','感冒','n./v.','cold; to catch a cold','cảm; bị cảm'],
+      ['ké sou','咳嗽','v.','to cough','ho'],
+      ['yào','药','n.','medicine','thuốc'],
+      ['chī yào','吃药','v.','to take medicine','uống thuốc'],
+      ['dǎ zhēn','打针','v.','to get an injection','tiêm; chích'],
+      ['shū fu','舒服','adj.','comfortable','thoải mái; dễ chịu'],
+      ['bù shūfu','不舒服','adj.','not feeling well','không khỏe; khó chịu'],
+    ]
+  },
+
+  // ── Trường học (School) ──
+  'Trường học': {
+    id:'SCH', name:'School', hanzi:'学校', pinyinTitle:'xuéxiào',
+    words: [
+      ['xuéshēng','学生','n.','student','học sinh; sinh viên'],
+      ['lǎoshī','老师','n.','teacher','giáo viên'],
+      ['tóngxué','同学','n.','classmate','bạn cùng lớp'],
+      ['bān','班','n.','class','lớp'],
+      ['kè','课','n.','lesson; class','bài; tiết học'],
+      ['shàng kè','上课','v.','to attend class','đi học; vào lớp'],
+      ['xià kè','下课','v.','to finish class','tan học; hết tiết'],
+      ['xuéxí','学习','v.','to study; to learn','học tập'],
+      ['kǎoshì','考试','n./v.','exam; to take an exam','thi; kiểm tra'],
+      ['zuòyè','作业','n.','homework','bài tập'],
+      ['shū','书','n.','book','sách'],
+      ['bǐ','笔','n.','pen','bút'],
+      ['qiānbǐ','铅笔','n.','pencil','bút chì'],
+      ['běnzi','本子','n.','notebook','vở'],
+      ['hēibǎn','黑板','n.','blackboard','bảng đen'],
+      ['zìdiǎn','字典','n.','dictionary','từ điển'],
+      ['wèntí','问题','n.','question; problem','câu hỏi; vấn đề'],
+      ['huídá','回答','v.','to answer','trả lời'],
+      ['dǒng','懂','v.','to understand','hiểu'],
+      ['bù dǒng','不懂','','don\'t understand','không hiểu'],
+      ['dú','读','v.','to read aloud','đọc'],
+      ['xiě','写','v.','to write','viết'],
+      ['shuō','说','v.','to speak; to say','nói'],
+      ['tīng','听','v.','to listen','nghe'],
+    ]
+  },
+
+  // ── Đồ vật & Trong ngoài (Objects & Spatial) ──
+  'Đồ vật': {
+    id:'OBJ', name:'Objects', hanzi:'东西', pinyinTitle:'dōngxi',
+    words: [
+      ['zhuōzi','桌子','n.','table; desk','bàn'],
+      ['yǐzi','椅子','n.','chair','ghế'],
+      ['chuáng','床','n.','bed','giường'],
+      ['mén','门','n.','door','cửa'],
+      ['chuānghu','窗户','n.','window','cửa sổ'],
+      ['qiáng','墙','n.','wall','tường'],
+      ['dēng','灯','n.','light; lamp','đèn'],
+      ['kōngtiáo','空调','n.','air conditioner','máy lạnh; điều hòa'],
+      ['diànshì','电视','n.','TV','ti vi'],
+      ['bīngxiāng','冰箱','n.','refrigerator','tủ lạnh'],
+      ['xǐyījī','洗衣机','n.','washing machine','máy giặt'],
+      ['shǒujī','手机','n.','mobile phone','điện thoại di động'],
+      ['diànnǎo','电脑','n.','computer','máy tính'],
+      ['yàoshi','钥匙','n.','key','chìa khóa'],
+      ['qiánbāo','钱包','n.','wallet','ví tiền'],
+      ['bāo','包','n.','bag','túi; balo'],
+      ['yǔsǎn','雨伞','n.','umbrella','ô; dù'],
+      ['yīfu','衣服','n.','clothes','quần áo'],
+      ['xié','鞋','n.','shoes','giày'],
+      ['màozi','帽子','n.','hat','mũ; nón'],
+      ['yǎnjìng','眼镜','n.','glasses','kính'],
+    ]
+  },
+
+  // ── Gia đình (Family) ──
+  'Gia đình': {
+    id:'FAM', name:'Family', hanzi:'家庭', pinyinTitle:'jiātíng',
+    words: [
+      ['bàba','爸爸','n.','dad','bố; ba'],
+      ['māma','妈妈','n.','mom','mẹ; má'],
+      ['gēge','哥哥','n.','older brother','anh trai'],
+      ['jiějie','姐姐','n.','older sister','chị gái'],
+      ['dìdi','弟弟','n.','younger brother','em trai'],
+      ['mèimei','妹妹','n.','younger sister','em gái'],
+      ['érzi','儿子','n.','son','con trai'],
+      ['nǚér','女儿','n.','daughter','con gái'],
+      ['zhàngfu','丈夫','n.','husband','chồng'],
+      ['qīzi','妻子','n.','wife','vợ'],
+      ['yéye','爷爷','n.','grandpa (paternal)','ông nội'],
+      ['nǎinai','奶奶','n.','grandma (paternal)','bà nội'],
+      ['wàigōng','外公','n.','grandpa (maternal)','ông ngoại'],
+      ['wàipó','外婆','n.','grandma (maternal)','bà ngoại'],
+      ['háizi','孩子','n.','child; children','con; đứa trẻ'],
+      ['jiā','家','n.','home; family','nhà; gia đình'],
+      ['jiārén','家人','n.','family members','người nhà'],
+    ]
+  },
+
+  // ── Thời tiết (Weather) ──
+  'Thời tiết': {
+    id:'WEA', name:'Weather', hanzi:'天气', pinyinTitle:'tiānqì',
+    words: [
+      ['tiānqì','天气','n.','weather','thời tiết'],
+      ['rè','热','adj.','hot','nóng'],
+      ['lěng','冷','adj.','cold','lạnh'],
+      ['nuǎnhuo','暖和','adj.','warm','ấm áp'],
+      ['liángkuai','凉快','adj.','cool','mát mẻ'],
+      ['xià yǔ','下雨','v.','to rain','mưa'],
+      ['xià xuě','下雪','v.','to snow','tuyết rơi'],
+      ['guā fēng','刮风','v.','to be windy','gió thổi'],
+      ['tàiyáng','太阳','n.','sun','mặt trời'],
+      ['yún','云','n.','cloud','mây'],
+      ['yīn tiān','阴天','n.','cloudy day','trời âm u'],
+      ['qíng tiān','晴天','n.','sunny day','trời nắng'],
+      ['wēndù','温度','n.','temperature','nhiệt độ'],
+      ['dù','度','MW','degree','độ'],
+    ]
+  },
+
+  // ── Màu sắc (Colors) ──
+  'Màu sắc': {
+    id:'CLR', name:'Colors', hanzi:'颜色', pinyinTitle:'yánsè',
+    words: [
+      ['yánsè','颜色','n.','color','màu sắc'],
+      ['hóngsè','红色','n.','red','màu đỏ'],
+      ['huángsè','黄色','n.','yellow','màu vàng'],
+      ['lǜsè','绿色','n.','green','màu xanh lá'],
+      ['lánsè','蓝色','n.','blue','màu xanh dương'],
+      ['báisè','白色','n.','white','màu trắng'],
+      ['hēisè','黑色','n.','black','màu đen'],
+      ['fěnsè','粉色','n.','pink','màu hồng'],
+      ['zǐsè','紫色','n.','purple','màu tím'],
+      ['huīsè','灰色','n.','grey','màu xám'],
+      ['chéngsè','橙色','n.','orange','màu cam'],
+      ['kāfēisè','咖啡色','n.','brown','màu nâu'],
+    ]
+  },
 };
 
 // All words flattened for flashcards/quiz
