@@ -3,9 +3,22 @@
 //  Matching English Portal format
 // ══════════════════════════════════════════
 
-// ── Speech: Local audio (Youdao pre-downloaded) → Online fallback ──
+// ── Speech: Local audio (human voice) → Youdao → Web Speech API ──
 let currentAudio = null;
 
+// Speak a pinyin syllable using real human voice (Purple Culture recordings)
+function speakPinyin(syllable) {
+  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+  if (!syllable) return;
+  const url = 'audio/pinyin/' + syllable + '.mp3';
+  currentAudio = new Audio(url);
+  currentAudio.play().catch(function() {
+    // Fallback to Youdao online
+    speakOnline(syllable, 1.0);
+  });
+}
+
+// Speak a Chinese word/sentence (Youdao local MP3 → online → Web Speech)
 function speak(text, rate) {
   if (currentAudio) { currentAudio.pause(); currentAudio = null; }
   if ('speechSynthesis' in window) speechSynthesis.cancel();
@@ -13,19 +26,18 @@ function speak(text, rate) {
 
   const playRate = rate || 1.0;
 
-  // Step 1: Try local audio file (pre-downloaded from Youdao)
+  // Step 1: Try local Youdao audio file
   if (typeof AUDIO_MAP !== 'undefined' && AUDIO_MAP[text]) {
     const localUrl = 'audio/' + AUDIO_MAP[text] + '.mp3';
     currentAudio = new Audio(localUrl);
     currentAudio.playbackRate = playRate;
     currentAudio.play().catch(function() {
-      // Local file failed — try online
       speakOnline(text, playRate);
     });
     return;
   }
 
-  // Step 2: No local file — try online providers
+  // Step 2: No local file — try online
   speakOnline(text, playRate);
 }
 
@@ -191,28 +203,44 @@ function renderTimer() {
 // ══════════════════════════════════════════
 //  PINYIN SECTION
 // ══════════════════════════════════════════
+// Pinyin-to-audio-file mapping for initials and finals
+const PINYIN_AUDIO = {
+  // Initials: play the standard syllable
+  'b':'bo1','p':'po1','m':'mo1','f':'fo2','d':'de2','t':'te4','n':'ne4','l':'le4',
+  'g':'ge1','k':'ke1','h':'he1','j':'ji1','q':'qi1','x':'xi1',
+  'zh':'zhi1','ch':'chi1','sh':'shi1','r':'ri4','z':'zi1','c':'ci4','s':'si1',
+  'y':'yi1','w':'wu1',
+  // Single finals
+  'a':'a1','o':'o1','e':'e4','i':'yi1','u':'wu3','ü':'yu2',
+  // Compound finals
+  'ai':'ai4','ei':'ei2','ao':'ao4','ou':'ou1','an':'an1','en':'en1','ang':'ang2','eng':'eng1','ong':'ong1',
+  'ia':'ya1','ie':'ye3','iao':'yao4','iu':'you3','ian':'yan1','in':'yin1','iang':'yang2','ing':'ying1','iong':'yong4',
+  'ua':'wa1','uo':'wo3','uai':'wai4','ui':'wei4','uan':'wan4','un':'wen4','uang':'wang2','ueng':'weng1',
+  'üe':'yue4','üan':'yuan2','ün':'yun2',
+};
+
 function renderPinyin() {
   // Initials
   const initGrid = document.getElementById('initialsGrid');
   initGrid.innerHTML = INITIALS.map(i =>
-    '<div class="py-card" onclick="speak(\''+i.char+'\')"><div class="py-letter">'+i.py+'</div><div class="py-hint">'+i.vn+'</div></div>'
+    '<div class="py-card" onclick="speakPinyin(\''+PINYIN_AUDIO[i.py]+'\')"><div class="py-letter">'+i.py+'</div><div class="py-hint">'+i.vn+'</div></div>'
   ).join('');
 
   // Finals
   const singleGrid = document.getElementById('singleFinals');
   singleGrid.innerHTML = FINALS.single.map(f =>
-    '<div class="py-card" onclick="speak(\''+f.char+'\')"><div class="py-letter">'+f.py+'</div><div class="py-hint">'+f.vn+'</div></div>'
+    '<div class="py-card" onclick="speakPinyin(\''+(PINYIN_AUDIO[f.py]||f.py+'1')+'\')"><div class="py-letter">'+f.py+'</div><div class="py-hint">'+f.vn+'</div></div>'
   ).join('');
 
   const compGrid = document.getElementById('compoundFinals');
   compGrid.innerHTML = FINALS.compound.map(f =>
-    '<div class="py-card py-sm" onclick="speak(\''+f.char+'\')"><div class="py-letter">'+f.py+'</div></div>'
+    '<div class="py-card py-sm" onclick="speakPinyin(\''+(PINYIN_AUDIO[f.py]||f.py+'1')+'\')"><div class="py-letter">'+f.py+'</div></div>'
   ).join('');
 
   // Tones
   const toneGrid = document.getElementById('tonesGrid');
   toneGrid.innerHTML = TONES.map(t =>
-    '<div class="tone-card" style="border-left:4px solid '+t.color+'" onclick="speak(\''+t.char+'\')">' +
+    '<div class="tone-card" style="border-left:4px solid '+t.color+'" onclick="speakPinyin(\'ma'+t.num+'\')">' +
     '<div class="tone-num" style="color:'+t.color+'">'+t.name+'</div>' +
     '<div class="tone-vn">'+t.vn+'</div>' +
     '<div class="tone-example">'+t.example+'</div></div>'
@@ -221,10 +249,14 @@ function renderPinyin() {
   // Tone practice
   const toneP = document.getElementById('tonePractice');
   toneP.innerHTML = TONE_PRACTICE.map(row =>
-    '<div class="tp-row">' + row.map(s => {
+    '<div class="tp-row">' + row.map((s, idx) => {
       if (!s) return '<span class="tp-cell tp-empty">—</span>';
-      const ch = PY_CHAR_MAP[s] || s;
-      return '<span class="tp-cell" onclick="speak(\''+ch+'\')">' + s + '</span>';
+      // Convert pinyin with tone mark to syllable+tone number for audio file
+      const toneNum = idx + 1; // columns are tone 1,2,3,4
+      // Extract base syllable (remove tone marks)
+      const base = s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ü/g,'v');
+      const audioFile = base + toneNum;
+      return '<span class="tp-cell" onclick="speakPinyin(\''+audioFile+'\')">' + s + '</span>';
     }).join('') + '</div>'
   ).join('');
 
@@ -235,8 +267,7 @@ function renderPinyin() {
     '<tr><td class="syl-init">'+r.initial+'</td>' +
     r.syllables.map(s => {
       if (!s) return '<td class="syl-empty"></td>';
-      const ch = PY_CHAR_MAP[s] || s;
-      return '<td class="syl-cell" onclick="speak(\''+ch+'\')">' + s + '</td>';
+      return '<td class="syl-cell" onclick="speakPinyin(\''+s+'1\')">' + s + '</td>';
     }).join('') +
     '</tr>'
   ).join('');
