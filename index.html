@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Học Tiếng Trung — Chinese Express</title>
+<link rel="stylesheet" href="css/style.css?v=1">
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">🇨🇳 Học Tiếng Trung</div>
+  <div class="nav-links">
+    <a href="#dashboard" onclick="scrollToSection('dashboard')">Dashboard</a>
+    <a href="#pinyin" onclick="scrollToSection('pinyin')">Pinyin</a>
+    <a href="#mistakes" onclick="scrollToSection('mistakes')">Lỗi Thường Gặp</a>
+    <a href="#vocabulary" onclick="scrollToSection('vocabulary')">Từ Vựng</a>
+    <a href="#conversations" onclick="scrollToSection('conversations')">Hội Thoại</a>
+  </div>
+  <div class="nav-actions">
+    <button class="btn btn-sm" id="themeToggle" onclick="toggleTheme()">Dark</button>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">&#9776;</button>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#dashboard" onclick="scrollToSection('dashboard');toggleMobileMenu()">Dashboard</a>
+  <a href="#pinyin" onclick="scrollToSection('pinyin');toggleMobileMenu()">Pinyin</a>
+  <a href="#mistakes" onclick="scrollToSection('mistakes');toggleMobileMenu()">Lỗi Thường Gặp</a>
+  <a href="#vocabulary" onclick="scrollToSection('vocabulary');toggleMobileMenu()">Từ Vựng</a>
+  <a href="#conversations" onclick="scrollToSection('conversations');toggleMobileMenu()">Hội Thoại</a>
+</div>
+
+<main>
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboard">
+  <div class="dashboard-header">
+    <div class="dashboard-title">Dashboard Học Tập</div>
+    <div class="dashboard-date" id="dashDate"></div>
+  </div>
+  <div class="dashboard-grid" id="dashGrid"></div>
+
+  <div class="timer-bar">
+    <span class="timer-digits" id="timerDigits">00:00:00</span>
+    <button class="btn btn-sm btn-primary" id="timerStartBtn" onclick="toggleTimer()">Bắt đầu</button>
+    <button class="btn btn-sm" onclick="resetTimer()">Reset</button>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:8px;">
+    <div style="flex:1;min-width:180px;">
+      <div style="display:flex;justify-content:space-between;font-size:.82rem;color:var(--text2);margin-bottom:2px;">
+        <span id="dailyProgressLabel">0 / 10 từ hôm nay</span>
+        <span id="dailyProgressPct">0%</span>
+      </div>
+      <div class="daily-progress-bar"><div class="daily-progress-fill incomplete" id="dailyProgressFill" style="width:0%"></div></div>
+    </div>
+    <div class="target-setting">
+      <label>Mục tiêu:</label>
+      <input type="number" class="target-input" id="dailyTarget" min="3" max="50" value="10" onchange="updateDailyTarget(this.value)">
+      <span>từ/ngày</span>
+    </div>
+  </div>
+
+  <div style="margin-top:12px;">
+    <div style="font-size:.82rem;font-weight:600;color:var(--text2);margin-bottom:4px;">Hoạt động 30 ngày:</div>
+    <div class="heatmap" id="heatmap"></div>
+  </div>
+
+  <div class="backup-bar" style="margin-top:12px;">
+    <button class="btn btn-sm" onclick="exportProgress()">Tải xuống tiến trình</button>
+    <button class="btn btn-sm" onclick="document.getElementById('importFile').click()">Tải lên tiến trình</button>
+    <input type="file" id="importFile" accept=".json" onchange="importProgress(event)" style="display:none">
+    <button class="btn btn-sm" onclick="resetProgress()" style="color:#ef4444;">Reset</button>
+  </div>
+</div>
+
+<!-- PINYIN -->
+<div class="section" id="pinyin">
+  <h2 class="section-title">Phát Âm Pinyin — 拼音</h2>
+  <p class="section-subtitle">Nhấn vào bất kỳ ô nào để NGHE phát âm. Đây là nền tảng quan trọng nhất!</p>
+
+  <div class="py-label">Thanh mẫu — Initials (声母)</div>
+  <div class="py-grid" id="initialsGrid"></div>
+
+  <div class="py-label">Vận mẫu đơn — Single Finals (韵母)</div>
+  <div class="py-grid" id="singleFinals"></div>
+
+  <div class="py-label">Vận mẫu kép — Compound Finals</div>
+  <div class="py-grid" id="compoundFinals"></div>
+
+  <div class="py-label">4 Thanh điệu — Tones (声调)</div>
+  <p style="font-size:.85rem;color:var(--text2);margin-bottom:8px;">Tiếng Việt có 6 thanh, tiếng Trung có 4 + thanh nhẹ. So sánh giúp bạn học nhanh hơn!</p>
+  <div id="tonesGrid"></div>
+
+  <div class="py-label">Luyện thanh điệu — Nhấn để nghe</div>
+  <div id="tonePractice"></div>
+
+  <div class="py-label">Bảng âm tiết — Syllable Table</div>
+  <p style="font-size:.82rem;color:var(--text2);margin-bottom:8px;">Nhấn vào ô để nghe. Đây là TẤT CẢ âm tiết có thể có trong tiếng Trung.</p>
+  <div class="syl-table-wrap">
+    <table class="syl-table" id="syllableTable"></table>
+  </div>
+</div>
+
+<!-- COMMON MISTAKES -->
+<div class="section" id="mistakes">
+  <h2 class="section-title">Lỗi Phổ Biến Người Việt</h2>
+  <p class="section-subtitle">Những lỗi phát âm mà người Việt hay mắc khi học tiếng Trung — và cách khắc phục!</p>
+  <div id="mistakesContent"></div>
+</div>
+
+<!-- VOCABULARY -->
+<div class="section" id="vocabulary">
+  <h2 class="section-title">Từ Vựng — 词汇</h2>
+  <p class="section-subtitle">Từ vựng theo chủ đề từ sách Chinese Express. Nhấn vào chữ Hán để NGHE phát âm.</p>
+
+  <div class="stats-bar" id="vocabStats"></div>
+
+  <div class="vocab-controls">
+    <input type="text" class="search-box" id="vocabSearch" placeholder="Tìm từ (pinyin, 汉字, EN, VN)..." oninput="filterVocab()">
+    <button class="btn btn-sm" onclick="openFlashcards()">Flashcards</button>
+    <button class="btn btn-sm" onclick="openQuiz()">Quiz</button>
+  </div>
+  <div class="topic-chips" id="topicChips"></div>
+  <div id="vocabContent"></div>
+</div>
+
+<!-- CONVERSATIONS & PATTERNS -->
+<div class="section" id="conversations">
+  <h2 class="section-title">Hội Thoại & Mẫu Câu — 会话</h2>
+  <p class="section-subtitle">Các đoạn hội thoại từ sách. Nhấn vào dòng để nghe phát âm.</p>
+  <div id="convoContent"></div>
+
+  <h3 style="font-size:1.05rem;font-weight:700;color:var(--primary);margin:20px 0 8px;">Mẫu câu quan trọng — Sentence Patterns</h3>
+  <div id="patternsContent"></div>
+</div>
+
+</main>
+
+<!-- Notes FAB -->
+<button class="notes-fab" onclick="toggleNotesPanel()" title="Ghi chú">✏️
+  <span class="fab-badge" id="notesBadge" style="display:none">0</span>
+</button>
+
+<!-- Notes Panel -->
+<div class="notes-panel" id="notesPanel">
+  <div class="notes-header">
+    <h3>Ghi Chú</h3>
+    <button class="notes-close" onclick="toggleNotesPanel()">✕</button>
+  </div>
+  <div class="notes-body" id="notesList"></div>
+  <div class="notes-footer">
+    <div class="notes-selects">
+      <select class="note-select" id="noteTagSelect">
+        <option value="question">Câu hỏi</option>
+        <option value="issue">Khó khăn</option>
+        <option value="tip">Mẹo hay</option>
+        <option value="general">Chung</option>
+      </select>
+      <select class="note-select" id="noteSectionSelect">
+        <option value="">Không</option>
+        <option value="Pinyin">Pinyin</option>
+        <option value="Từ vựng">Từ vựng</option>
+        <option value="Hội thoại">Hội thoại</option>
+        <option value="Thanh điệu">Thanh điệu</option>
+      </select>
+    </div>
+    <div class="notes-input-row">
+      <textarea class="note-textarea" id="noteInput" placeholder="Viết ghi chú..." rows="2" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();addNote();}"></textarea>
+      <button class="note-add-btn" onclick="addNote()">+</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<script src="js/pinyin-data.js?v=1"></script>
+<script src="js/vocab-data.js?v=1"></script>
+<script src="js/patterns-data.js?v=1"></script>
+<script src="js/app.js?v=1"></script>
+</body>
+</html>
