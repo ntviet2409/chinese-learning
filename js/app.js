@@ -92,23 +92,29 @@ function speak(text, rate) {
   speakOnline(text, playRate);
 }
 
-// Speak vocabulary word: try pinyin human voice first, then Youdao
+// Speak vocabulary word
+// Single-syllable (1-2 chars): Purple Culture human voice
+// Multi-syllable (3+ chars): Youdao local MP3
 function speakWord(hanzi, pinyin) {
   if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
 
-  // Try single-syllable human voice file
-  const files = pinyinToAudioFiles(pinyin);
-  if (files.length === 1) {
-    const url = 'audio/pinyin/' + files[0] + '.mp3';
-    currentAudio = new Audio(url);
-    currentAudio.play().catch(function() {
-      // Fallback to Youdao
-      speak(hanzi);
-    });
-    return;
+  // Determine if single syllable: hanzi is 1 char, or pinyin has no space and is short
+  const isSingle = hanzi.length === 1 || (pinyin.indexOf(' ') === -1 && pinyin.length <= 4);
+
+  if (isSingle) {
+    // Try Purple Culture human voice
+    const files = pinyinToAudioFiles(pinyin);
+    if (files.length === 1) {
+      const url = 'audio/pinyin/' + files[0] + '.mp3';
+      currentAudio = new Audio(url);
+      currentAudio.onerror = function() { speak(hanzi); };
+      currentAudio.play().catch(function() { speak(hanzi); });
+      return;
+    }
   }
 
-  // Multi-syllable: use Youdao (sounds more natural for phrases)
+  // Multi-syllable or fallback: use Youdao local MP3 → online
   speak(hanzi);
 }
 
