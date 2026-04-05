@@ -3,58 +3,52 @@
 //  Matching English Portal format
 // ══════════════════════════════════════════
 
-// ── Speech: Google Translate TTS (natural female voice) ──
-// Falls back to Web Speech API if Google fails
+// ── Speech: Local audio (Youdao pre-downloaded) → Online fallback ──
 let currentAudio = null;
 
 function speak(text, rate) {
-  // Stop any currently playing audio
   if (currentAudio) { currentAudio.pause(); currentAudio = null; }
   if ('speechSynthesis' in window) speechSynthesis.cancel();
-
   if (!text) return;
 
-  // Fallback chain: multiple TTS providers → Web Speech API
+  const playRate = rate || 1.0;
+
+  // Step 1: Try local audio file (pre-downloaded from Youdao)
+  if (typeof AUDIO_MAP !== 'undefined' && AUDIO_MAP[text]) {
+    const localUrl = 'audio/' + AUDIO_MAP[text] + '.mp3';
+    currentAudio = new Audio(localUrl);
+    currentAudio.playbackRate = playRate;
+    currentAudio.play().catch(function() {
+      // Local file failed — try online
+      speakOnline(text, playRate);
+    });
+    return;
+  }
+
+  // Step 2: No local file — try online providers
+  speakOnline(text, playRate);
+}
+
+function speakOnline(text, rate) {
   const encoded = encodeURIComponent(text);
   const providers = [
-    // Youdao Dictionary TTS — natural female voice
     'https://dict.youdao.com/dictvoice?audio=' + encoded + '&le=zh',
-    // Google Translate TTS — reliable fallback
     'https://translate.googleapis.com/translate_tts?client=gtx&tl=zh-CN&q=' + encoded,
   ];
 
   let tried = 0;
   function tryNext() {
-    if (tried >= providers.length) {
-      // All online providers failed — use browser TTS
-      speakFallback(text, rate);
-      return;
-    }
+    if (tried >= providers.length) { speakFallback(text, rate); return; }
     const url = providers[tried];
     tried++;
     currentAudio = new Audio();
-
-    // Set up error handling BEFORE setting src
     currentAudio.onerror = function() { tryNext(); };
-
-    // Set timeout — if no sound in 3s, try next
     const timeout = setTimeout(function() {
-      if (currentAudio && currentAudio.readyState < 2) {
-        currentAudio.pause();
-        tryNext();
-      }
+      if (currentAudio && currentAudio.readyState < 2) { currentAudio.pause(); tryNext(); }
     }, 3000);
-
-    currentAudio.oncanplaythrough = function() {
-      clearTimeout(timeout);
-      currentAudio.playbackRate = rate || 1.0;
-    };
-
+    currentAudio.oncanplaythrough = function() { clearTimeout(timeout); currentAudio.playbackRate = rate || 1.0; };
     currentAudio.src = url;
-    currentAudio.play().catch(function() {
-      clearTimeout(timeout);
-      tryNext();
-    });
+    currentAudio.play().catch(function() { clearTimeout(timeout); tryNext(); });
   }
   tryNext();
 }
