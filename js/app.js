@@ -6,6 +6,45 @@
 // ── Speech: Local audio (human voice) → Youdao → Web Speech API ──
 let currentAudio = null;
 
+// ── Pinyin tone mark → number conversion ──
+const TONE_MARKS = {'ā':['a',1],'á':['a',2],'ǎ':['a',3],'à':['a',4],'ē':['e',1],'é':['e',2],'ě':['e',3],'è':['e',4],'ī':['i',1],'í':['i',2],'ǐ':['i',3],'ì':['i',4],'ō':['o',1],'ó':['o',2],'ǒ':['o',3],'ò':['o',4],'ū':['u',1],'ú':['u',2],'ǔ':['u',3],'ù':['u',4],'ǖ':['v',1],'ǘ':['v',2],'ǚ':['v',3],'ǜ':['v',4]};
+
+function pinyinToAudioFiles(pinyin) {
+  // Split multi-syllable pinyin and convert each to filename
+  // e.g. "wǒmen" → ["wo3","men2"], "nǐ hǎo" → ["ni3","hao3"]
+  const parts = pinyin.replace(/\//g,' ').trim().split(/[\s]+/);
+  const files = [];
+  parts.forEach(function(part) {
+    // Check if it's a multi-syllable without spaces (e.g. "wǒmen", "xièxie")
+    // Simple heuristic: if there are multiple tone marks, split at tone boundaries
+    let remaining = part.toLowerCase();
+    while (remaining.length > 0) {
+      let tone = 1;
+      let base = '';
+      let foundTone = false;
+
+      for (let i = 0; i < remaining.length; i++) {
+        const ch = remaining[i];
+        if (TONE_MARKS[ch]) {
+          base += TONE_MARKS[ch][0];
+          tone = TONE_MARKS[ch][1];
+          foundTone = true;
+        } else {
+          base += ch;
+        }
+      }
+
+      if (!foundTone) tone = 5; // neutral tone → try tone 4 or 1
+
+      // For compound words, try the whole thing as one file first
+      const filename = base.replace(/ü/g,'v') + tone;
+      files.push(filename);
+      break; // Treat entire part as one syllable for now
+    }
+  });
+  return files;
+}
+
 // Speak a pinyin syllable using real human voice (Purple Culture recordings)
 function speakPinyin(syllable) {
   if (currentAudio) { currentAudio.pause(); currentAudio = null; }
@@ -13,12 +52,24 @@ function speakPinyin(syllable) {
   const url = 'audio/pinyin/' + syllable + '.mp3';
   currentAudio = new Audio(url);
   currentAudio.play().catch(function() {
-    // Fallback to Youdao online
     speakOnline(syllable, 1.0);
   });
 }
 
-// Speak a Chinese word/sentence (Youdao local MP3 → online → Web Speech)
+// Play a sequence of pinyin syllable audio files
+function speakPinyinSequence(files, idx) {
+  if (!files || idx >= files.length) return;
+  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+  const url = 'audio/pinyin/' + files[idx] + '.mp3';
+  currentAudio = new Audio(url);
+  currentAudio.onended = function() { speakPinyinSequence(files, idx + 1); };
+  currentAudio.play().catch(function() {
+    // Try next syllable if this one fails
+    speakPinyinSequence(files, idx + 1);
+  });
+}
+
+// Speak a Chinese word: try human voice pinyin → Youdao local → online
 function speak(text, rate) {
   if (currentAudio) { currentAudio.pause(); currentAudio = null; }
   if ('speechSynthesis' in window) speechSynthesis.cancel();
@@ -26,7 +77,7 @@ function speak(text, rate) {
 
   const playRate = rate || 1.0;
 
-  // Step 1: Try local Youdao audio file
+  // Step 1: Try local Youdao audio (best for full words/phrases)
   if (typeof AUDIO_MAP !== 'undefined' && AUDIO_MAP[text]) {
     const localUrl = 'audio/' + AUDIO_MAP[text] + '.mp3';
     currentAudio = new Audio(localUrl);
@@ -37,8 +88,28 @@ function speak(text, rate) {
     return;
   }
 
-  // Step 2: No local file — try online
+  // Step 2: Try online
   speakOnline(text, playRate);
+}
+
+// Speak vocabulary word: try pinyin human voice first, then Youdao
+function speakWord(hanzi, pinyin) {
+  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+
+  // Try single-syllable human voice file
+  const files = pinyinToAudioFiles(pinyin);
+  if (files.length === 1) {
+    const url = 'audio/pinyin/' + files[0] + '.mp3';
+    currentAudio = new Audio(url);
+    currentAudio.play().catch(function() {
+      // Fallback to Youdao
+      speak(hanzi);
+    });
+    return;
+  }
+
+  // Multi-syllable: use Youdao (sounds more natural for phrases)
+  speak(hanzi);
 }
 
 function speakOnline(text, rate) {
@@ -329,8 +400,8 @@ function renderVocab() {
       '<div class="vc-pinyin-primary">'+w.pinyin+'</div>' +
       '<div class="vc-hanzi-secondary">'+w.hanzi+'</div>' +
       '<div class="vc-speak-btns">' +
-      '<button class="vc-speak" onclick="event.stopPropagation();speak(\''+w.hanzi+'\')">🔊 Nghe</button>' +
-      '<button class="vc-speak vc-slow" onclick="event.stopPropagation();speakSlow(\''+w.hanzi+'\')">🐢 Chậm</button>' +
+      '<button class="vc-speak" onclick="event.stopPropagation();speakWord(\''+w.hanzi.replace(/'/g,"\\'")+'\',\''+w.pinyin.replace(/'/g,"\\'")+'\')">🔊 Nghe</button>' +
+      '<button class="vc-speak vc-slow" onclick="event.stopPropagation();speakSlow(\''+w.hanzi.replace(/'/g,"\\'")+'\')">🐢 Chậm</button>' +
       '</div>' +
       '</div>' +
       '<div class="vc-right">' +
