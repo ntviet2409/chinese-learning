@@ -116,8 +116,8 @@ main { max-width:900px;margin:0 auto;padding:16px 14px 60px; }
 .vocab-card:hover { border-color:var(--primary); }
 .vc-learned { border-left:3px solid var(--success); }
 .vc-left { cursor:pointer;text-align:center;min-width:80px; }
-.vc-hanzi { font-size:1.5rem;font-weight:700; }
-.vc-pinyin { font-size:.85rem;color:var(--primary);font-weight:600; }
+.vc-pinyin-primary { font-size:1.3rem;font-weight:700;color:var(--primary); }
+.vc-hanzi-secondary { font-size:1rem;color:var(--text2);opacity:.6; }
 .vc-speak-hint { font-size:.65rem;color:var(--text2); }
 .vc-right { flex:1; }
 .vc-en { font-size:.9rem;font-weight:600; }
@@ -137,8 +137,8 @@ main { max-width:900px;margin:0 auto;padding:16px 14px 60px; }
 .convo-line:hover { background:var(--accent); }
 .cl-speaker { font-weight:800;color:var(--primary);min-width:20px; }
 .cl-content { flex:1; }
-.cl-pinyin { font-size:.88rem;font-weight:600;color:var(--primary); }
-.cl-hanzi { font-size:1.1rem;font-weight:700; }
+.cl-pinyin { font-size:1.05rem;font-weight:700;color:var(--primary); }
+.cl-hanzi-sub { font-size:.88rem;color:var(--text2);opacity:.5; }
 .cl-en { font-size:.82rem;color:var(--text2); }
 .cl-vn { font-size:.82rem;color:var(--success);font-style:italic; }
 .cl-speak-icon { font-size:1rem;opacity:.4;flex-shrink:0; }
@@ -168,8 +168,10 @@ main { max-width:900px;margin:0 auto;padding:16px 14px 60px; }
 .fc-btn { padding:10px 18px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-card);font-size:.9rem;cursor:pointer;font-family:var(--font);transition:.2s; }
 .fc-btn:hover { border-color:var(--primary);color:var(--primary); }
 
-.quiz-hanzi { font-size:2rem;font-weight:700;cursor:pointer;text-align:center; }
-.quiz-pinyin { font-size:1rem;color:var(--primary);text-align:center;margin-bottom:8px; }
+.quiz-pinyin-big { font-size:1.6rem;font-weight:700;color:var(--primary);cursor:pointer;text-align:center; }
+.quiz-hanzi-sub { font-size:1rem;color:var(--text2);text-align:center;margin-bottom:8px;opacity:.5; }
+.fc-hanzi-sub { font-size:1.1rem;color:var(--text2);margin-top:4px;opacity:.5; }
+.convo-lesson-id { font-size:.75rem;color:var(--text2);font-weight:400; }
 .quiz-prompt { font-size:.9rem;color:var(--text2);text-align:center;margin-bottom:16px; }
 .quiz-opts { display:grid;gap:8px; }
 .quiz-opt { padding:14px;border:2px solid var(--border);border-radius:var(--radius);font-size:.95rem;cursor:pointer;text-align:center;transition:.15s;background:var(--bg-card);font-family:var(--font); }

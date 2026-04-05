@@ -6,7 +6,7 @@
 const VOCAB = {
   // ── LESSON 2: Greetings (问好) ──
   'Chào hỏi': {
-    id:'L2', name:'Greetings', hanzi:'问好',
+    id:'L2', name:'Greetings', hanzi:'问好', pinyinTitle:'wènhǎo',
     words: [
       ['wǒ','我','pron.','I; me','tôi'],
       ['nǐ','你','pron.','you','bạn'],
@@ -38,7 +38,7 @@ const VOCAB = {
 
   // ── LESSON 3: Introduction (介绍) ──
   'Giới thiệu': {
-    id:'L3', name:'Introduction', hanzi:'介绍',
+    id:'L3', name:'Introduction', hanzi:'介绍', pinyinTitle:'jièshào',
     words: [
       ['jiào','叫','v.','to call; to be known as','gọi; tên là'],
       ['shì','是','v.','to be','là'],
@@ -68,7 +68,7 @@ const VOCAB = {
 
   // ── LESSON 4: What Is This (这是什么) ──
   'Đây là gì?': {
-    id:'L4', name:'What Is This', hanzi:'这是什么',
+    id:'L4', name:'What Is This', hanzi:'这是什么', pinyinTitle:'zhè shì shénme',
     words: [
       ['zhè','这','pron.','this','đây; này'],
       ['nà','那','pron.','that','đó; kia'],
@@ -89,7 +89,7 @@ const VOCAB = {
 
   // ── LESSON 5: Where Are You Going (你去哪里) ──
   'Bạn đi đâu?': {
-    id:'L5', name:'Where Are You Going', hanzi:'你去哪里',
+    id:'L5', name:'Where Are You Going', hanzi:'你去哪里', pinyinTitle:'nǐ qù nǎli',
     words: [
       ['qù','去','v.','to go','đi'],
       ['lái','来','v.','to come','đến'],
@@ -122,7 +122,7 @@ const VOCAB = {
 
   // ── LESSON 6: May I Have... (我要) ──
   'Tôi muốn...': {
-    id:'L6', name:'May I Have...', hanzi:'我要……',
+    id:'L6', name:'May I Have...', hanzi:'我要……', pinyinTitle:'wǒ yào',
     words: [
       ['yào','要','v.','to want; to need','muốn; cần'],
       ['mǎi','买','v.','to buy','mua'],
@@ -146,7 +146,7 @@ const VOCAB = {
 
   // ── LESSON 7: Taking a Taxi (打的) ──
   'Đi taxi': {
-    id:'L7', name:'Taking a Taxi', hanzi:'打的',
+    id:'L7', name:'Taking a Taxi', hanzi:'打的', pinyinTitle:'dǎ dī',
     words: [
       ['dǎ dī','打的','v.','to take a taxi','đi taxi'],
       ['zuò','坐','v.','to sit; to take (transport)','ngồi; đi (xe)'],
@@ -171,7 +171,7 @@ const VOCAB = {
 
   // ── LESSON 8: What Time Is It (什么时候) ──
   'Mấy giờ?': {
-    id:'L8', name:'What Time Is It', hanzi:'什么时候',
+    id:'L8', name:'What Time Is It', hanzi:'什么时候', pinyinTitle:'shénme shíhou',
     words: [
       ['jǐ','几','pron.','how many; which','mấy'],
       ['diǎn','点','MW','o\'clock','giờ (giờ đồng hồ)'],
@@ -193,7 +193,7 @@ const VOCAB = {
 
   // ── LESSON 9: Date (日期) ──
   'Ngày tháng': {
-    id:'L9', name:'Date', hanzi:'日期',
+    id:'L9', name:'Date', hanzi:'日期', pinyinTitle:'rìqī',
     words: [
       ['nián','年','n.','year','năm'],
       ['yuè','月','n.','month','tháng'],
@@ -216,7 +216,7 @@ const VOCAB = {
 
   // ── LESSON 10: Food (吃的东西) ──
   'Đồ ăn': {
-    id:'L10', name:'Food', hanzi:'吃的东西',
+    id:'L10', name:'Food', hanzi:'吃的东西', pinyinTitle:'chī de dōngxi',
     words: [
       ['mǐfàn','米饭','n.','rice','cơm'],
       ['miàntiáo','面条','n.','noodles','mì; phở'],
@@ -244,7 +244,7 @@ const VOCAB = {
 
   // ── Numbers (Bổ sung — Lesson 3 supplement) ──
   'Số đếm': {
-    id:'NUM', name:'Numbers', hanzi:'数字',
+    id:'NUM', name:'Numbers', hanzi:'数字', pinyinTitle:'shùzì',
     words: [
       ['líng','零','num.','zero','số 0'],
       ['yī','一','num.','one','số 1'],

@@ -240,9 +240,9 @@ function renderVocab() {
     const learned = learnedWords[w.pinyin];
     return '<div class="vocab-card ' + (learned ? 'vc-learned' : '') + '">' +
       '<div class="vc-left" onclick="speak(\''+w.hanzi+'\')">' +
-      '<div class="vc-hanzi">'+w.hanzi+'</div>' +
-      '<div class="vc-pinyin">'+w.pinyin+'</div>' +
-      '<div class="vc-speak-hint">Nhấn để nghe</div>' +
+      '<div class="vc-pinyin-primary">'+w.pinyin+'</div>' +
+      '<div class="vc-hanzi-secondary">'+w.hanzi+'</div>' +
+      '<div class="vc-speak-hint">Nhấn để nghe 🔊</div>' +
       '</div>' +
       '<div class="vc-right">' +
       '<div class="vc-en">'+w.en+'</div>' +
@@ -267,7 +267,7 @@ function renderConversations() {
   const el = document.getElementById('convoContent');
   el.innerHTML = CONVERSATIONS.map(lesson =>
     '<div class="convo-lesson">' +
-    '<h3 class="convo-title">' + lesson.topic + ' — ' + lesson.title + '</h3>' +
+    '<h3 class="convo-title">' + lesson.topic + ' — ' + lesson.title + ' <span class="convo-lesson-id">' + lesson.lesson + '</span></h3>' +
     lesson.convos.map(c =>
       '<div class="convo-block">' +
       '<h4 class="convo-sub">' + c.title + '</h4>' +
@@ -276,7 +276,7 @@ function renderConversations() {
         '<span class="cl-speaker">' + l.speaker + ':</span>' +
         '<div class="cl-content">' +
         '<div class="cl-pinyin">' + l.pinyin + '</div>' +
-        '<div class="cl-hanzi">' + l.hanzi + '</div>' +
+        '<div class="cl-hanzi-sub">' + l.hanzi + '</div>' +
         '<div class="cl-en">' + l.en + '</div>' +
         '<div class="cl-vn">' + l.vn + '</div>' +
         '</div>' +
@@ -321,9 +321,9 @@ function renderFlashcard() {
     '<div class="fc-header"><span>'+(fcIndex+1)+'/'+fcWords.length+'</span><button class="fc-close" onclick="closeModal()">✕</button></div>' +
     '<div class="fc-card" onclick="fcFlip()">' +
     (fcFlipped ?
-      '<div class="fc-back"><div class="fc-hanzi-big">'+w.hanzi+'</div><div class="fc-pinyin-big">'+w.pinyin+'</div><div class="fc-en-big">'+w.en+'</div><div class="fc-vn-big">'+w.vn+'</div></div>'
+      '<div class="fc-back"><div class="fc-pinyin-big">'+w.pinyin+'</div><div class="fc-hanzi-sub">'+w.hanzi+'</div><div class="fc-en-big">'+w.en+'</div><div class="fc-vn-big">'+w.vn+'</div></div>'
       :
-      '<div class="fc-front"><div class="fc-hanzi-big">'+w.hanzi+'</div><div class="fc-tap">Nhấn để lật</div></div>'
+      '<div class="fc-front"><div class="fc-pinyin-big" style="font-size:1.8rem;">'+w.pinyin+'</div><div class="fc-hanzi-sub" style="font-size:1.3rem;opacity:.5;">'+w.hanzi+'</div><div class="fc-tap">Nhấn để lật</div></div>'
     ) +
     '</div>' +
     '<div class="fc-actions">' +
@@ -360,8 +360,8 @@ function renderQuiz() {
   el.innerHTML = '<div class="quiz-modal">' +
     '<div class="fc-header"><span>Câu '+(quizIndex+1)+'/'+quizWords.length+'</span><button class="fc-close" onclick="closeModal()">✕</button></div>' +
     '<div class="quiz-q">' +
-    '<div class="quiz-hanzi" onclick="speak(\''+w.hanzi+'\')">'+w.hanzi+' 🔊</div>' +
-    '<div class="quiz-pinyin">'+w.pinyin+'</div>' +
+    '<div class="quiz-pinyin-big" onclick="speak(\''+w.hanzi+'\')">'+w.pinyin+' 🔊</div>' +
+    '<div class="quiz-hanzi-sub">'+w.hanzi+'</div>' +
     '<div class="quiz-prompt">Nghĩa tiếng Việt là gì?</div>' +
     '</div>' +
     '<div class="quiz-opts">' +
