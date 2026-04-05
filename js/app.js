@@ -3,21 +3,55 @@
 //  Matching English Portal format
 // ══════════════════════════════════════════
 
-// ── Speech Synthesis (CRITICAL for pronunciation) ──
+// ── Speech: Google Translate TTS (natural female voice) ──
+// Falls back to Web Speech API if Google fails
+let currentAudio = null;
+
 function speak(text, rate) {
+  // Stop any currently playing audio
+  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+
+  if (!text) return;
+
+  // Primary: Youdao Dictionary TTS (natural, clear pronunciation)
+  // Fallback chain: Youdao → Google Translate → Web Speech API
+  const providers = [
+    'https://dict.youdao.com/dictvoice?type=0&audio=' + encodeURIComponent(text),
+    'https://translate.google.com/translate_tts?ie=UTF-8&tl=zh-CN&client=tw-ob&q=' + encodeURIComponent(text),
+  ];
+
+  function tryProvider(idx) {
+    if (idx >= providers.length) { speakFallback(text, rate); return; }
+    try {
+      currentAudio = new Audio(providers[idx]);
+      currentAudio.playbackRate = rate || 1.0;
+      currentAudio.onerror = () => tryProvider(idx + 1);
+      currentAudio.play().catch(() => tryProvider(idx + 1));
+    } catch(e) { tryProvider(idx + 1); }
+  }
+  tryProvider(0);
+}
+
+// Slow mode — for learning, plays at 0.7x speed
+function speakSlow(text) {
+  speak(text, 0.7);
+}
+
+function speakFallback(text, rate) {
   if (!('speechSynthesis' in window)) return;
-  speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
   u.lang = 'zh-CN';
   u.rate = rate || 0.75;
-  // Try to find a Chinese voice
   const voices = speechSynthesis.getVoices();
-  const zhVoice = voices.find(v => v.lang.startsWith('zh'));
+  // Prefer female voice
+  const zhFemale = voices.find(v => v.lang.startsWith('zh') && v.name.toLowerCase().includes('female'));
+  const zhVoice = zhFemale || voices.find(v => v.lang.startsWith('zh'));
   if (zhVoice) u.voice = zhVoice;
   speechSynthesis.speak(u);
 }
 
-// Preload voices
+// Preload voices for fallback
 if ('speechSynthesis' in window) {
   speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
 }
@@ -239,10 +273,13 @@ function renderVocab() {
   el.innerHTML = filtered.map(w => {
     const learned = learnedWords[w.pinyin];
     return '<div class="vocab-card ' + (learned ? 'vc-learned' : '') + '">' +
-      '<div class="vc-left" onclick="speak(\''+w.hanzi+'\')">' +
+      '<div class="vc-left">' +
       '<div class="vc-pinyin-primary">'+w.pinyin+'</div>' +
       '<div class="vc-hanzi-secondary">'+w.hanzi+'</div>' +
-      '<div class="vc-speak-hint">Nhấn để nghe 🔊</div>' +
+      '<div class="vc-speak-btns">' +
+      '<button class="vc-speak" onclick="event.stopPropagation();speak(\''+w.hanzi+'\')">🔊 Nghe</button>' +
+      '<button class="vc-speak vc-slow" onclick="event.stopPropagation();speakSlow(\''+w.hanzi+'\')">🐢 Chậm</button>' +
+      '</div>' +
       '</div>' +
       '<div class="vc-right">' +
       '<div class="vc-en">'+w.en+'</div>' +
@@ -328,6 +365,7 @@ function renderFlashcard() {
     '</div>' +
     '<div class="fc-actions">' +
     '<button class="fc-btn" onclick="speak(\''+w.hanzi+'\')">🔊 Nghe</button>' +
+    '<button class="fc-btn" onclick="speakSlow(\''+w.hanzi+'\')">🐢 Chậm</button>' +
     '<button class="fc-btn" onclick="fcPrev()">← Trước</button>' +
     '<button class="fc-btn" onclick="fcNext()">Tiếp →</button>' +
     '</div></div>';

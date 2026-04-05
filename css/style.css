@@ -118,6 +118,11 @@ main { max-width:900px;margin:0 auto;padding:16px 14px 60px; }
 .vc-left { cursor:pointer;text-align:center;min-width:80px; }
 .vc-pinyin-primary { font-size:1.3rem;font-weight:700;color:var(--primary); }
 .vc-hanzi-secondary { font-size:1rem;color:var(--text2);opacity:.6; }
+.vc-speak-btns { display:flex;gap:4px;margin-top:4px; }
+.vc-speak { padding:3px 8px;border:1px solid var(--border);border-radius:12px;font-size:.68rem;cursor:pointer;background:var(--bg-card);color:var(--text2);transition:.2s;font-family:var(--font); }
+.vc-speak:hover { border-color:var(--primary);color:var(--primary); }
+.vc-slow { color:var(--success); }
+.vc-slow:hover { border-color:var(--success);color:var(--success); }
 .vc-speak-hint { font-size:.65rem;color:var(--text2); }
 .vc-right { flex:1; }
 .vc-en { font-size:.9rem;font-weight:600; }
