@@ -608,6 +608,132 @@ const VOCAB = {
       ['xiànjīn','现金','n.','cash','tiền mặt'],
     ]
   },
+  // ── Tính từ & Miêu tả (Adjectives & Descriptions) ──
+  'Tính từ & Miêu tả': {
+    id:'ADJ', name:'Adjectives & Descriptions', hanzi:'形容词', pinyinTitle:'xíngróngcí',
+    words: [
+      ['shuài','帅','adj.','handsome','đẹp trai'],
+      ['piàoliang','漂亮','adj.','beautiful; pretty','đẹp; xinh'],
+      ['lèi','累','adj.','tired','mệt'],
+      ['è','饿','adj.','hungry','đói'],
+      ['bǎo','饱','adj.','full (stomach)','no; bão'],
+      ['cháng','长','adj.','long','dài'],
+      ['duǎn','短','adj.','short (length)','ngắn'],
+      ['dà','大','adj.','big','lớn; to'],
+      ['xiǎo','小','adj.','small','nhỏ; bé'],
+      ['gāo','高','adj.','tall; high','cao'],
+      ['ǎi','矮','adj.','short (height)','thấp; lùn'],
+      ['kuài','快','adj.','fast','nhanh'],
+      ['màn','慢','adj.','slow','chậm'],
+      ['xīn','新','adj.','new','mới'],
+      ['jiù','旧','adj.','old (things)','cũ'],
+      ['duō','多','adj.','many; much','nhiều'],
+      ['shǎo','少','adj.','few; little','ít'],
+      ['búcuò','不错','adj.','not bad; pretty good','không tệ; khá tốt'],
+    ]
+  },
+
+  // ── Hoạt động & Động từ (Actions & Verbs) ──
+  'Hoạt động & Động từ': {
+    id:'VERB', name:'Actions & Verbs', hanzi:'动词', pinyinTitle:'dòngcí',
+    words: [
+      ['qù wánr','去玩儿','v.','to go out and play','đi chơi'],
+      ['liáotiān','聊天','v.','to chat','trò chuyện; tâm sự'],
+      ['juéde','觉得','v.','to feel; to think','cảm thấy; nghĩ rằng'],
+      ['shuō','说','v.','to speak; to say','nói'],
+      ['tīng','听','v.','to listen','nghe'],
+      ['kàn','看','v.','to look; to read; to watch','xem; nhìn; đọc'],
+      ['xiě','写','v.','to write','viết'],
+      ['dú','读','v.','to read aloud','đọc'],
+      ['yòng','用','v.','to use','dùng; sử dụng'],
+      ['huì','会','v.','can; able to','biết; có thể'],
+      ['kěyǐ','可以','v.','can; may','có thể; được phép'],
+      ['fàng','放','v.','to put; to place','đặt; cho vào'],
+      ['ná','拿','v.','to take; to hold','lấy; cầm'],
+      ['qǔ','取','v.','to fetch; to pick up','lấy'],
+      ['dài','带','v.','to bring; to carry','mang; đem'],
+      ['jiē','接','v.','to receive; to meet; to welcome','đón; nhận'],
+      ['sòng','送','v.','to send; to give (gift); to see off','gửi; tặng; tiễn'],
+      ['zuò','做','v.','to do; to make','làm'],
+      ['xiàyǔ','下雨','v.','to rain','mưa'],
+      ['dǎpái','打牌','v.','to play cards','đánh bài'],
+    ]
+  },
+
+  // ── Thời gian & Thời lượng (Time expressions) ──
+  'Thời gian mở rộng': {
+    id:'TIME2', name:'Time Expressions', hanzi:'时间表达', pinyinTitle:'shíjiān biǎodá',
+    words: [
+      ['shíjiān','时间','n.','time','thời gian'],
+      ['xiǎoshí','小时','n.','hour','giờ (thời lượng)'],
+      ['yígè xiǎoshí','一个小时','','one hour','một giờ'],
+      ['bàn gè xiǎoshí','半个小时','','half an hour','nửa giờ'],
+      ['yígè bàn xiǎoshí','一个半小时','','one and a half hours','một tiếng rưỡi'],
+      ['xiànzài','现在','n.','now','bây giờ'],
+      ['píngshí','平时','adv.','usually','thường ngày'],
+      ['shàng gè xīngqī','上个星期','','last week','tuần trước'],
+      ['xià gè xīngqī','下个星期','','next week','tuần sau'],
+      ['zhège xīngqī','这个星期','','this week','tuần này'],
+      ['duō cháng shíjiān','多长时间','','how long (duration)','bao lâu'],
+    ]
+  },
+
+  // ── Đồ ăn sáng & Nấu nướng (Breakfast & Cooking) ──
+  'Đồ ăn sáng & Nấu nướng': {
+    id:'COOK', name:'Breakfast & Cooking', hanzi:'早餐和做饭', pinyinTitle:'zǎocān hé zuòfàn',
+    words: [
+      ['kǎomiànbāo','烤面包','n.','toast','bánh mì nướng'],
+      ['guǒjiàng','果酱','n.','jam','mứt'],
+      ['nǎilào','奶酪','n.','cheese','phô mai'],
+      ['huángyóu','黄油','n.','butter','bơ'],
+      ['xiāngcháng','香肠','n.','sausage','xúc xích'],
+      ['cù','醋','n.','vinegar','giấm'],
+      ['jiàngyóu','酱油','n.','soy sauce','nước tương; xì dầu'],
+      ['táng','糖','n.','sugar','đường'],
+      ['yán','盐','n.','salt','muối'],
+      ['shuǐguǒ','水果','n.','fruit','trái cây; hoa quả'],
+      ['huǒguō','火锅','n.','hot pot','lẩu'],
+    ]
+  },
+
+  // ── Di chuyển & Du lịch (Travel) ──
+  'Di chuyển & Du lịch': {
+    id:'TRAVEL', name:'Travel', hanzi:'旅行', pinyinTitle:'lǚxíng',
+    words: [
+      ['cóng','从','prep.','from','từ'],
+      ['dào','到','v./prep.','to arrive; to','đến'],
+      ['zuò fēijī','坐飞机','','to take a plane','đi máy bay'],
+      ['zuòchē','坐车','','to take a car/bus','đi xe'],
+      ['Xīnjiāpō','新加坡','n.','Singapore','Singapore'],
+      ['Xīnbì','新币','n.','Singapore dollar','đô Singapore'],
+      ['xiàzhù','下注','v.','to bet; to reserve','cược; đặt cọc'],
+      ['zuìdī','最低','adj.','lowest; minimum','thấp nhất; tối thiểu'],
+      ['diànyǐng','电影','n.','movie','phim'],
+      ['shìpín','视频','n.','video','video'],
+      ['duǎnxìn','短信','n.','text message','tin nhắn'],
+      ['kuàidì','快递','n.','express delivery','chuyển phát nhanh'],
+      ['qǔ kuàidì','取快递','','to pick up delivery','lấy hàng'],
+      ['yǔsǎn','雨伞','n.','umbrella','cái ô; dù'],
+      ['ānquán mào','安全帽','n.','helmet','mũ bảo hiểm'],
+    ]
+  },
+
+  // ── Câu thường dùng (Common Phrases) ──
+  'Câu thường dùng': {
+    id:'PHRASE', name:'Common Phrases', hanzi:'常用句', pinyinTitle:'chángyòng jù',
+    words: [
+      ['nǐ jiào shénme míngzi','你叫什么名字','','What is your name?','Bạn tên là gì?'],
+      ['nǐ shì nǎ guó rén','你是哪国人','','Where are you from?','Bạn là người nước nào?'],
+      ['nǐ duōshao suì','你多少岁','','How old are you?','Bạn bao nhiêu tuổi?'],
+      ['nǐ zuò shénme gōngzuò','你做什么工作','','What do you do?','Bạn làm nghề gì?'],
+      ['jīntiān tiānqì zěnme yàng','今天天气怎么样','','How is the weather today?','Thời tiết hôm nay thế nào?'],
+      ['yǒudiǎnr lěng','有点儿冷','','a bit cold','hơi lạnh'],
+      ['tài guì le','太贵了','','too expensive','đắt quá'],
+      ['hái méi chī','还没吃','','haven\'t eaten yet','chưa ăn'],
+      ['nǐ bú xiàng Yuènán rén','你不像越南人','','You don\'t look Vietnamese','Bạn không giống người Việt Nam'],
+      ['hǎo ba, nà xià cì wǒ qǐng','好吧，那下次我请','','OK, next time I treat','OK, lần sau tôi mời'],
+    ]
+  },
 };
 
 // All words flattened for flashcards/quiz
