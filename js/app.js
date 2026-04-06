@@ -402,23 +402,23 @@ function renderVocab() {
     );
   }
 
-  el.innerHTML = filtered.map(w => {
+  el.innerHTML = '<div class="vocab-grid">' + filtered.map(w => {
     const learned = learnedWords[w.pinyin];
-    return '<div class="vocab-card ' + (learned ? 'vc-learned' : '') + '">' +
-      '<div class="vc-left" onclick="speak(\''+w.hanzi.replace(/'/g,"\\'")+'\')">' +
-      '<div class="vc-pinyin-primary">'+w.pinyin+'</div>' +
-      '<div class="vc-hanzi-secondary">'+w.hanzi+'</div>' +
-      '<div class="vc-speak-hint">nhấn để nghe</div>' +
+    const hanziSafe = w.hanzi.replace(/'/g,"\\'");
+    return '<div class="vocab-card ' + (learned ? 'vc-learned' : '') + '" onclick="speak(\''+hanziSafe+'\')">' +
+      '<div class="vc-top">' +
+      '<span class="vc-pinyin-primary">'+w.pinyin+'</span>' +
+      '<span class="vc-hanzi-secondary">'+w.hanzi+'</span>' +
       '</div>' +
-      '<div class="vc-right">' +
       '<div class="vc-en">'+w.en+'</div>' +
       '<div class="vc-vn">'+w.vn+'</div>' +
-      '<div class="vc-pos">'+w.pos+'</div>' +
+      '<div class="vc-bottom">' +
+      '<span class="vc-pos">'+w.pos+'</span>' +
+      '<span class="vc-learn-btn ' + (learned ? 'vc-unlearn' : '') + '" onclick="event.stopPropagation();toggleLearned(\''+w.pinyin+'\');markWordToday(\''+w.pinyin+'\')">' +
+      (learned ? '✓' : '○') + '</span>' +
       '</div>' +
-      '<button class="vc-learn-btn ' + (learned ? 'vc-unlearn' : '') + '" onclick="toggleLearned(\''+w.pinyin+'\');markWordToday(\''+w.pinyin+'\')">' +
-      (learned ? '✓ Đã học' : 'Đánh dấu đã học') + '</button>' +
       '</div>';
-  }).join('');
+  }).join('') + '</div>';
 
   if (filtered.length === 0) {
     el.innerHTML = '<div class="vocab-empty">Không tìm thấy từ nào.</div>';
