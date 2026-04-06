@@ -45,15 +45,16 @@ function pinyinToAudioFiles(pinyin) {
   return files;
 }
 
-// Speak a pinyin syllable using Google TTS (best quality) → Purple Culture fallback
+// Speak a pinyin syllable: Google TTS → Purple Culture → online
 function speakPinyin(syllable) {
+  // Stop any currently playing audio first
   if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
   if (!syllable) return;
 
-  // Try Google TTS first (Chirp3-HD natural voice)
+  // Try Google TTS first (Chirp3-HD)
   if (typeof PINYIN_AUDIO_MAP !== 'undefined' && PINYIN_AUDIO_MAP[syllable]) {
-    const url = 'audio/google/' + PINYIN_AUDIO_MAP[syllable] + '.mp3';
-    currentAudio = new Audio(url);
+    currentAudio = new Audio('audio/google/' + PINYIN_AUDIO_MAP[syllable] + '.mp3');
     currentAudio.onerror = function() { speakPinyinFallback(syllable); };
     currentAudio.play().catch(function() { speakPinyinFallback(syllable); });
     return;
@@ -62,10 +63,10 @@ function speakPinyin(syllable) {
 }
 
 function speakPinyinFallback(syllable) {
-  // Fallback to Purple Culture
-  const url = 'audio/pinyin/' + syllable + '.mp3';
-  currentAudio = new Audio(url);
-  currentAudio.play().catch(function() { speakOnline(syllable, 1.0); });
+  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+  currentAudio = new Audio('audio/pinyin/' + syllable + '.mp3');
+  currentAudio.onerror = function() {};
+  currentAudio.play().catch(function() {});
 }
 
 // Play a sequence of pinyin syllable audio files
@@ -103,29 +104,8 @@ function speak(text, rate) {
   speakOnline(text, playRate);
 }
 
-// Speak vocabulary word
-// Single-syllable (1-2 chars): Purple Culture human voice
-// Multi-syllable (3+ chars): Youdao local MP3
+// speakWord is now just speak() — Google TTS handles everything
 function speakWord(hanzi, pinyin) {
-  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
-  if ('speechSynthesis' in window) speechSynthesis.cancel();
-
-  // Determine if single syllable: hanzi is 1 char, or pinyin has no space and is short
-  const isSingle = hanzi.length === 1 || (pinyin.indexOf(' ') === -1 && pinyin.length <= 4);
-
-  if (isSingle) {
-    // Try Purple Culture human voice
-    const files = pinyinToAudioFiles(pinyin);
-    if (files.length === 1) {
-      const url = 'audio/pinyin/' + files[0] + '.mp3';
-      currentAudio = new Audio(url);
-      currentAudio.onerror = function() { speak(hanzi); };
-      currentAudio.play().catch(function() { speak(hanzi); });
-      return;
-    }
-  }
-
-  // Multi-syllable or fallback: use Youdao local MP3 → online
   speak(hanzi);
 }
 
