@@ -512,6 +512,102 @@ const VOCAB = {
       ['kāfēisè','咖啡色','n.','brown','màu nâu'],
     ]
   },
+  // ── Lượng từ thông dụng (Measure Words) ──
+  'Lượng từ': {
+    id:'MW', name:'Measure Words', hanzi:'量词', pinyinTitle:'liàngcí',
+    words: [
+      ['gè','个','MW','general MW (most common)','cái (lượng từ phổ biến nhất)'],
+      ['bēi','杯','MW','cup of; glass of','ly; cốc'],
+      ['píng','瓶','MW','bottle of','chai'],
+      ['guàn','罐','MW','can of; jar of','lon; hộp'],
+      ['wǎn','碗','MW','bowl of','tô; bát; chén'],
+      ['tái','台','MW','MW for machines','cái; chiếc (cho máy móc)'],
+      ['zhāng','张','MW','MW for flat things (paper, table)','tờ; cái (vật phẳng)'],
+      ['běn','本','MW','MW for books','cuốn; quyển'],
+      ['jiàn','件','MW','MW for clothes, events','cái; bộ; việc'],
+      ['tiáo','条','MW','MW for long things (road, fish, pants)','con; cái (vật dài)'],
+      ['zhī','只','MW','MW for animals, one of pair','con (cho động vật)'],
+      ['shuāng','双','MW','pair of','đôi'],
+      ['kuài','块','MW','piece; yuan (money)','miếng; đồng (tiền)'],
+      ['jīn','斤','MW','0.5 kg (Chinese unit)','cân (nửa kg)'],
+      ['liǎng','两','num.','two (before MW)','hai (trước lượng từ)'],
+    ]
+  },
+
+  // ── Giới thiệu bản thân (Self Introduction) ──
+  'Giới thiệu bản thân': {
+    id:'SELF', name:'Self Introduction', hanzi:'自我介绍', pinyinTitle:'zìwǒ jièshào',
+    words: [
+      ['ruǎnjiàn gōngchéngshī','软件工程师','n.','software engineer','kỹ sư phần mềm'],
+      ['hěn gāoxìng rènshi nǐ','很高兴认识你','','nice to meet you','rất vui được gặp bạn'],
+      ['gāoxìng','高兴','adj.','happy; glad','vui; vui mừng'],
+      ['rènshi','认识','v.','to know; to meet','quen; biết; nhận ra'],
+      ['gōngzuò','工作','v./n.','to work; job','làm việc; công việc'],
+      ['gōngsī','公司','n.','company','công ty'],
+      ['jīnglǐ','经理','n.','manager','quản lý; giám đốc'],
+      ['kuàijì','会计','n.','accountant','kế toán'],
+      ['lǜshī','律师','n.','lawyer','luật sư'],
+      ['hùshi','护士','n.','nurse','y tá'],
+      ['sījī','司机','n.','driver','tài xế'],
+      ['chúshī','厨师','n.','chef','đầu bếp'],
+      ['suì','岁','MW','years old','tuổi'],
+      ['duō dà','多大','','how old','bao nhiêu tuổi'],
+    ]
+  },
+
+  // ── Vị / Hương vị (Taste / Flavor) ──
+  'Hương vị': {
+    id:'TASTE', name:'Taste & Flavor', hanzi:'味道', pinyinTitle:'wèidao',
+    words: [
+      ['tián','甜','adj.','sweet','ngọt'],
+      ['là','辣','adj.','spicy','cay'],
+      ['suān','酸','adj.','sour','chua'],
+      ['kǔ','苦','adj.','bitter','đắng'],
+      ['xián','咸','adj.','salty','mặn'],
+      ['hǎochī','好吃','adj.','delicious (food)','ngon (đồ ăn)'],
+      ['hǎohē','好喝','adj.','delicious (drink)','ngon (đồ uống)'],
+      ['bù hǎochī','不好吃','adj.','not delicious','không ngon'],
+      ['wèidao','味道','n.','taste; flavor','vị; hương vị'],
+    ]
+  },
+
+  // ── Đồ uống (Drinks) ──
+  'Đồ uống': {
+    id:'DRINK', name:'Drinks', hanzi:'饮料', pinyinTitle:'yǐnliào',
+    words: [
+      ['shuǐ','水','n.','water','nước'],
+      ['chá','茶','n.','tea','trà'],
+      ['kāfēi','咖啡','n.','coffee','cà phê'],
+      ['niúnǎi','牛奶','n.','milk','sữa'],
+      ['píjiǔ','啤酒','n.','beer','bia'],
+      ['guǒzhī','果汁','n.','juice','nước ép'],
+      ['kělè','可乐','n.','cola','coca cola'],
+      ['yǐnliào','饮料','n.','beverage; drink','đồ uống; thức uống'],
+      ['rè de','热的','adj.','hot (drink)','nóng'],
+      ['lěng de','冷的','adj.','cold (drink)','lạnh'],
+      ['bīng de','冰的','adj.','iced','đá; có đá'],
+    ]
+  },
+
+  // ── Tiền & Mua sắm (Money & Shopping) ──
+  'Tiền & Mua sắm': {
+    id:'SHOP', name:'Money & Shopping', hanzi:'钱和购物', pinyinTitle:'qián hé gòuwù',
+    words: [
+      ['qián','钱','n.','money','tiền'],
+      ['kuài','块','MW','yuan (RMB dollar)','đồng (tệ)'],
+      ['máo','毛','MW','0.1 yuan','hào (1/10 tệ)'],
+      ['mǎi','买','v.','to buy','mua'],
+      ['mài','卖','v.','to sell','bán'],
+      ['duōshao qián','多少钱','','how much money','bao nhiêu tiền'],
+      ['piányi','便宜','adj.','cheap','rẻ'],
+      ['guì','贵','adj.','expensive','đắt; mắc'],
+      ['dǎ zhé','打折','v.','to give discount','giảm giá'],
+      ['zhǎo qián','找钱','v.','to give change','trả lại tiền thừa'],
+      ['fùqián','付钱','v.','to pay','trả tiền; thanh toán'],
+      ['sǎomǎ','扫码','v.','to scan QR code','quét mã'],
+      ['xiànjīn','现金','n.','cash','tiền mặt'],
+    ]
+  },
 };
 
 // All words flattened for flashcards/quiz

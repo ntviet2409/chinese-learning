@@ -393,13 +393,10 @@ function renderVocab() {
   el.innerHTML = filtered.map(w => {
     const learned = learnedWords[w.pinyin];
     return '<div class="vocab-card ' + (learned ? 'vc-learned' : '') + '">' +
-      '<div class="vc-left">' +
+      '<div class="vc-left" onclick="speak(\''+w.hanzi.replace(/'/g,"\\'")+'\')">' +
       '<div class="vc-pinyin-primary">'+w.pinyin+'</div>' +
       '<div class="vc-hanzi-secondary">'+w.hanzi+'</div>' +
-      '<div class="vc-speak-btns">' +
-      '<button class="vc-speak" onclick="event.stopPropagation();speakWord(\''+w.hanzi.replace(/'/g,"\\'")+'\',\''+w.pinyin.replace(/'/g,"\\'")+'\')">🔊 Nghe</button>' +
-      '<button class="vc-speak vc-slow" onclick="event.stopPropagation();speakSlow(\''+w.hanzi.replace(/'/g,"\\'")+'\')">🐢 Chậm</button>' +
-      '</div>' +
+      '<div class="vc-speak-hint">nhấn để nghe</div>' +
       '</div>' +
       '<div class="vc-right">' +
       '<div class="vc-en">'+w.en+'</div>' +
@@ -485,7 +482,6 @@ function renderFlashcard() {
     '</div>' +
     '<div class="fc-actions">' +
     '<button class="fc-btn" onclick="speak(\''+w.hanzi+'\')">🔊 Nghe</button>' +
-    '<button class="fc-btn" onclick="speakSlow(\''+w.hanzi+'\')">🐢 Chậm</button>' +
     '<button class="fc-btn" onclick="fcPrev()">← Trước</button>' +
     '<button class="fc-btn" onclick="fcNext()">Tiếp →</button>' +
     '</div></div>';
