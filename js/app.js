@@ -176,7 +176,19 @@ function toggleTheme() {
 
 // ── Mobile Nav ──
 function toggleMobileMenu() { document.getElementById('mobileNav').classList.toggle('open'); }
-function scrollToSection(id) { document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'}); }
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  // If collapsed, expand first
+  if (el.classList.contains('collapsed')) el.classList.remove('collapsed');
+  el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ── Collapsible Sections ──
+function toggleSection(toggleEl) {
+  const section = toggleEl.closest('.collapsible');
+  if (section) section.classList.toggle('collapsed');
+}
 
 // ── Learned Words (localStorage) ──
 let learnedWords = JSON.parse(localStorage.getItem('zh-learned') || '{}');

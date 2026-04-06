@@ -33,11 +33,15 @@
 <main>
 
 <!-- DASHBOARD -->
-<div class="dashboard" id="dashboard">
-  <div class="dashboard-header">
+<div class="dashboard collapsible" id="dashboard">
+  <div class="dashboard-header section-toggle" onclick="toggleSection(this)">
     <div class="dashboard-title">Dashboard Học Tập</div>
-    <div class="dashboard-date" id="dashDate"></div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="dashboard-date" id="dashDate"></div>
+      <span class="toggle-chevron">&#9660;</span>
+    </div>
   </div>
+  <div class="section-body">
   <div class="dashboard-grid" id="dashGrid"></div>
 
   <div class="timer-bar">
@@ -72,12 +76,17 @@
     <input type="file" id="importFile" accept=".json" onchange="importProgress(event)" style="display:none">
     <button class="btn btn-sm" onclick="resetProgress()" style="color:#ef4444;">Reset</button>
   </div>
+  </div><!-- /section-body -->
 </div>
 
 <!-- PINYIN -->
-<div class="section" id="pinyin">
-  <h2 class="section-title">Phát Âm Pinyin — pīnyīn</h2>
+<div class="section collapsible" id="pinyin">
+  <div class="section-toggle" onclick="toggleSection(this)">
+    <h2 class="section-title">Phát Âm Pinyin — pīnyīn</h2>
+    <span class="toggle-chevron">&#9660;</span>
+  </div>
   <p class="section-subtitle">Nhấn vào bất kỳ ô nào để NGHE phát âm. Đây là nền tảng quan trọng nhất!</p>
+  <div class="section-body">
 
   <div class="py-label">Thanh mẫu — Initials (shēngmǔ)</div>
   <div class="py-grid" id="initialsGrid"></div>
@@ -100,19 +109,29 @@
   <div class="syl-table-wrap">
     <table class="syl-table" id="syllableTable"></table>
   </div>
+  </div><!-- /section-body -->
 </div>
 
 <!-- COMMON MISTAKES -->
-<div class="section" id="mistakes">
-  <h2 class="section-title">Lỗi Phổ Biến Người Việt</h2>
+<div class="section collapsible" id="mistakes">
+  <div class="section-toggle" onclick="toggleSection(this)">
+    <h2 class="section-title">Lỗi Phổ Biến Người Việt</h2>
+    <span class="toggle-chevron">&#9660;</span>
+  </div>
   <p class="section-subtitle">Những lỗi phát âm mà người Việt hay mắc khi học tiếng Trung — và cách khắc phục!</p>
-  <div id="mistakesContent"></div>
+  <div class="section-body">
+    <div id="mistakesContent"></div>
+  </div><!-- /section-body -->
 </div>
 
 <!-- VOCABULARY -->
-<div class="section" id="vocabulary">
-  <h2 class="section-title">Từ Vựng — cíhuì</h2>
-  <p class="section-subtitle">Từ vựng theo chủ đề từ sách Chinese Express. Nhấn vào chữ Hán để NGHE phát âm.</p>
+<div class="section collapsible" id="vocabulary">
+  <div class="section-toggle" onclick="toggleSection(this)">
+    <h2 class="section-title">Từ Vựng — cíhuì</h2>
+    <span class="toggle-chevron">&#9660;</span>
+  </div>
+  <p class="section-subtitle">Nhấn vào từ để NGHE phát âm.</p>
+  <div class="section-body">
 
   <div class="stats-bar" id="vocabStats"></div>
 
@@ -125,14 +144,22 @@
   <div id="vocabContent"></div>
 </div>
 
+  </div><!-- /section-body vocab -->
+</div>
+
 <!-- CONVERSATIONS & PATTERNS -->
-<div class="section" id="conversations">
-  <h2 class="section-title">Hội Thoại & Mẫu Câu — huìhuà</h2>
-  <p class="section-subtitle">Các đoạn hội thoại từ sách. Nhấn vào dòng để nghe phát âm.</p>
+<div class="section collapsible" id="conversations">
+  <div class="section-toggle" onclick="toggleSection(this)">
+    <h2 class="section-title">Hội Thoại & Mẫu Câu — huìhuà</h2>
+    <span class="toggle-chevron">&#9660;</span>
+  </div>
+  <p class="section-subtitle">Nhấn vào dòng để nghe phát âm.</p>
+  <div class="section-body">
   <div id="convoContent"></div>
 
   <h3 style="font-size:1.05rem;font-weight:700;color:var(--primary);margin:20px 0 8px;">Mẫu câu quan trọng — Sentence Patterns</h3>
   <div id="patternsContent"></div>
+  </div><!-- /section-body -->
 </div>
 
 </main>

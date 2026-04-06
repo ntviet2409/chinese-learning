@@ -9,6 +9,15 @@
 * { margin:0;padding:0;box-sizing:border-box; } html { scroll-behavior:smooth; }
 body { font-family:var(--font); background:var(--bg); color:var(--text); line-height:1.6; }
 
+/* Collapsible sections */
+.section-toggle { display:flex; justify-content:space-between; align-items:center; cursor:pointer; user-select:none; padding:2px 0; }
+.section-toggle:hover .toggle-chevron { color:var(--primary); }
+.toggle-chevron { font-size:.8rem; color:var(--text2); transition:transform .3s; }
+.collapsible.collapsed .toggle-chevron { transform:rotate(-90deg); }
+.collapsible.collapsed .section-body { display:none; }
+.collapsible.collapsed .section-subtitle { display:none; }
+.section-body { transition:all .3s; }
+
 /* Nav */
 nav { position:sticky;top:0;z-index:100;background:var(--bg-nav);border-bottom:1px solid var(--border);box-shadow:var(--shadow);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:56px; }
 .nav-brand { font-weight:700;font-size:1.1rem;color:var(--primary); }
