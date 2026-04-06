@@ -45,15 +45,27 @@ function pinyinToAudioFiles(pinyin) {
   return files;
 }
 
-// Speak a pinyin syllable using real human voice (Purple Culture recordings)
+// Speak a pinyin syllable using Google TTS (best quality) → Purple Culture fallback
 function speakPinyin(syllable) {
   if (currentAudio) { currentAudio.pause(); currentAudio = null; }
   if (!syllable) return;
+
+  // Try Google TTS first (Chirp3-HD natural voice)
+  if (typeof PINYIN_AUDIO_MAP !== 'undefined' && PINYIN_AUDIO_MAP[syllable]) {
+    const url = 'audio/google/' + PINYIN_AUDIO_MAP[syllable] + '.mp3';
+    currentAudio = new Audio(url);
+    currentAudio.onerror = function() { speakPinyinFallback(syllable); };
+    currentAudio.play().catch(function() { speakPinyinFallback(syllable); });
+    return;
+  }
+  speakPinyinFallback(syllable);
+}
+
+function speakPinyinFallback(syllable) {
+  // Fallback to Purple Culture
   const url = 'audio/pinyin/' + syllable + '.mp3';
   currentAudio = new Audio(url);
-  currentAudio.play().catch(function() {
-    speakOnline(syllable, 1.0);
-  });
+  currentAudio.play().catch(function() { speakOnline(syllable, 1.0); });
 }
 
 // Play a sequence of pinyin syllable audio files
@@ -77,14 +89,13 @@ function speak(text, rate) {
 
   const playRate = rate || 1.0;
 
-  // Step 1: Try local Youdao audio (best for full words/phrases)
+  // Step 1: Try Google TTS (Chirp3-HD — most natural)
   if (typeof AUDIO_MAP !== 'undefined' && AUDIO_MAP[text]) {
-    const localUrl = 'audio/' + AUDIO_MAP[text] + '.mp3';
+    const localUrl = 'audio/google/' + AUDIO_MAP[text] + '.mp3';
     currentAudio = new Audio(localUrl);
     currentAudio.playbackRate = playRate;
-    currentAudio.play().catch(function() {
-      speakOnline(text, playRate);
-    });
+    currentAudio.onerror = function() { speakOnline(text, playRate); };
+    currentAudio.play().catch(function() { speakOnline(text, playRate); });
     return;
   }
 
